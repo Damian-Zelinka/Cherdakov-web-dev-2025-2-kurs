@@ -1,0 +1,854 @@
+/* Основные стили навбара */
+.navbar {
+    background-color: #1a1a1a !important; /* Темный фон как на скрине */
+    border-bottom: 2px solid #ffd700; /* Золотая полоса снизу */
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #ffd700 !important; /* Золотой цвет бренда */
+}
+
+.nav-link {
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+    position: relative;
+    margin: 0 10px;
+}
+
+.nav-link:hover {
+    color: #ffd700 !important;
+    transform: translateY(-2px);
+}
+
+/* Активная ссылка */
+.nav-item.active .nav-link {
+    color: #ffd700 !important;
+    font-weight: bold;
+}
+
+/* Блок с категориями */
+.categories-section {
+    margin: 20px 0;
+}
+
+.btn-categories {
+    background: none;
+    border: 2px solid #ffd700;
+    color: #ffd700;
+    padding: 8px 25px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-categories:hover {
+    background: #ffd700;
+    color: #1a1a1a;
+}
+
+/* Счетчик корзины */
+.cart-counter {
+    background: #ff4444;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 0.8em;
+    margin-left: 5px;
+}
+
+/* Баланс BeeCoin */
+.bee-coin-balance {
+    font-weight: 600;
+    color: #ffd700;
+    margin-right: 20px;
+}
+
+/* Адаптивность для мобилок */
+@media (max-width: 768px) {
+    .navbar-nav {
+        margin-top: 15px;
+    }
+    
+    .nav-item {
+        margin: 5px 0;
+    }
+    
+    .categories-section {
+        text-align: center;
+    }
+}
+
+/* Анимация алертов */
+.alert {
+    transition: opacity 0.5s ease;
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ffd700;
+    border-radius: 4px;
+}
+
+/* login */
+.auth-container {
+    min-height: calc(100vh - 100px);
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+.auth-card {
+    background: #0F0F0F;
+    padding: 2.5rem;
+    border-radius: 16px;
+    border: 1px solid #2A2A2A;  
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2.5rem !important;
+}
+
+.form-label {
+    margin-bottom: .5rem;
+    color: white;
+}
+.auth-title {
+    color: #FFB400;
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    color: #A0A0A0;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.auth-input {
+    background: #1A1A1A !important;
+    border: 1px solid #333 !important;
+    color: #FFF !important;
+    padding: 1rem !important;
+    border-radius: 8px !important;
+}
+
+.btn-auth {
+    background: #FFB400 !important;
+    color: #000 !important;
+    font-weight: 600;
+    padding: 1rem !important;
+    border-radius: 8px !important;
+    font-size: 1.1rem;
+}
+
+.auth-links {
+    margin-top: 1.5rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .auth-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .auth-title {
+        font-size: 1.8rem;
+    }
+    
+    .auth-input {
+        padding: 0.8rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .auth-card {
+        padding: 1.5rem 1rem;
+        border-radius: 12px;
+    }
+    
+    .auth-title {
+        font-size: 1.6rem;
+    }
+}
+
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(15, 15, 15, 0.9), rgba(15, 15, 15, 0.9)),
+                url('hive-bg.jpg');
+    padding: 100px 0;
+    color: white;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    color: #FFB400;
+    margin-bottom: 30px;
+}
+
+.btn-hero {
+    background: #FFB400;
+    color: #0F0F0F;
+    padding: 12px 35px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+/* Category Cards */
+.category-card {
+    background: #1A1A1A;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #333;
+    transition: transform 0.3s;
+    color: wheat;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Tables */
+.table {
+    color: white !important;
+    background: #1A1A1A;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #2A2A2A;
+}
+
+/* Daily Deal */
+.deal-card {
+    background: #1A1A1A;
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid #FFB400;
+    color: wheat;
+}
+
+.deal-title {
+    color: #FFB400;
+    font-size: 1.8rem;
+}
+
+/* Footer */
+.footer-section {
+    background: #0F0F0F;
+    padding: 50px 0;
+    margin-top: 100px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    color: wheat;
+}
+
+.stat-box {
+    text-align: center;
+    background: #1A1A1A;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .table {
+        font-size: 0.9rem;
+    }
+}
+
+/* Filters Section */
+.filters-section {
+
+    border-bottom: 1px solid rgba(255, 180, 0, 0.1);
+    padding: 1.5rem 0;
+}
+
+.filter-group {
+    position: relative;
+}
+
+.filter-label {
+    color: #FFB400 !important;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.filter-input,
+.filter-select {
+    border: 1px solid #333 !important;
+    color: #0F0F0F !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 8px !important;
+    transition: all 0.3s;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+    border-color: #FFB400 !important;
+    box-shadow: 0 0 0 3px rgba(255, 180, 0, 0.1) !important;
+}
+
+.input-group-text {
+    color: #0F0F0F !important;
+    background-color: white;
+    border: none
+}
+
+/* Исправление цветов текста */
+.hero-title,
+.section-title,
+.deal-title,
+.stat-box h3 {
+    color: #FFB400 !important;
+}
+
+.category-card h3,
+.recommendation-card h4 {
+    color: #FFF !important;
+}
+
+.table {
+    color: #FFF !important;
+}
+
+.table td {
+    border-color: #333 !important;
+}
+
+/* BeeCoin Page Styles */
+.bee-container {
+    max-width: 800px;
+    padding-top: 2rem;
+}
+
+.bee-main-title {
+    color: #FFB400;
+    font-weight: 700;
+    border-bottom: 2px solid #333;
+    padding-bottom: 1rem;
+}
+
+.balance-card {
+    background: #1A1A1A;
+    border-radius: 12px;
+    padding: 2rem;
+    border: 1px solid #333;
+}
+
+.balance-label {
+    color: #888;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.balance-amount {
+    color: #FFB400;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.balance-description {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.balance-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-redeem {
+    background: #FFB400;
+    color: #000;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+}
+
+.btn-earn {
+    background: none;
+    border: 2px solid #FFB400;
+    color: #FFB400;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.section-title {
+    color: #FFF;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #333;
+}
+
+.earning-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.earning-item {
+    background: #1A1A1A;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.earning-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.earning-title {
+    color: #FFB400;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.earning-text {
+    color: #888;
+    font-size: 0.95rem;
+}
+
+.transaction-list {
+    background: #1A1A1A;
+    border-radius: 12px;
+    border: 1px solid #333;
+    padding: 1rem;
+}
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #333;
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-amount {
+    font-weight: 600;
+    min-width: 80px;
+    font-size: 1.1rem;
+}
+
+.positive {
+    color: #28a745;
+}
+
+.negative {
+    color: #dc3545;
+}
+
+.transaction-description {
+    color: #FFF;
+}
+
+.transaction-date {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .earning-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .balance-actions {
+        flex-direction: column;
+    }
+}
+
+
+/* Profile Page Styles */
+.profile-container {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.breadcrumb {
+    background-color: #1A1A1A;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.breadcrumb-item a {
+    color: #FFB400;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.breadcrumb-item a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: #888;
+}
+
+.profile-card {
+    background: #1A1A1A;
+    border-radius: 12px;
+    padding: 2rem;
+    border: 1px solid #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.profile-title {
+    color: #FFB400;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #333;
+}
+
+.profile-section {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: #0F0F0F;
+    border-radius: 8px;
+    border: 1px solid #2A2A2A;
+}
+
+.section-header {
+    color: #FFB400;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.section-header::after {
+    content: "";
+    flex-grow: 1;
+    height: 1px;
+    background: #333;
+    margin-left: 0.8rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.user-avatar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #0F0F0F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #FFB400;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-placeholder {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #FFB400;
+}
+
+.user-name {
+    color: #FFF;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.user-role {
+    color: #888;
+    font-size: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid #333;
+}
+
+.detail-label {
+    color: #FFB400;
+    min-width: 180px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.detail-value {
+    color: #FFF;
+    flex-grow: 1;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+}
+
+.settings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.settings-item {
+    display: flex;
+    align-items: center;
+    padding: 1.2rem;
+    background: #0F0F0F;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 1px solid #333;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.settings-item:hover {
+    background: #1F1F1F;
+    transform: translateY(-3px);
+    border-color: #FFB400;
+}
+
+.settings-icon {
+    font-size: 1.8rem;
+    margin-right: 1.5rem;
+    color: #FFB400;
+    min-width: 40px;
+    text-align: center;
+}
+
+.settings-info {
+    flex-grow: 1;
+}
+
+.settings-title {
+    color: #FFF;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+}
+
+.settings-desc {
+    color: #888;
+    font-size: 0.95rem;
+}
+
+.arrow-icon {
+    color: #888;
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    transition: transform 0.3s;
+}
+
+.settings-item:hover .arrow-icon {
+    color: #FFB400;
+    transform: translateX(5px);
+}
+
+/* Форма загрузки аватара */
+.avatar-form {
+    width: 100%;
+}
+
+.input-group {
+    display: flex;
+    margin-top: 15px;
+}
+
+.form-control-file {
+    background: #0F0F0F;
+    border: 1px solid #333;
+    color: #FFF;
+    padding: 0.5rem;
+    border-radius: 5px 0 0 5px;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.form-control-file:focus {
+    outline: none;
+    border-color: #FFB400;
+    box-shadow: 0 0 0 3px rgba(255, 180, 0, 0.1);
+}
+
+.btn-upload {
+    background: #FFB400;
+    color: #000;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.btn-upload:hover {
+    background: #e6a200;
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+    .user-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .user-avatar {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .avatar-placeholder {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 1rem;
+    }
+    
+    .profile-card {
+        padding: 1.5rem;
+    }
+    
+    .profile-section {
+        padding: 1rem;
+    }
+    
+    .detail-item {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .detail-label {
+        min-width: auto;
+        font-size: 1rem;
+    }
+    
+    .detail-value {
+        font-size: 1rem;
+    }
+    
+    .input-group {
+        flex-direction: column;
+    }
+    
+    .form-control-file {
+        border-radius: 5px !important;
+        margin-bottom: 10px;
+    }
+    
+    .btn-upload {
+        border-radius: 5px !important;
+        width: 100%;
+        padding: 0.7rem;
+    }
+    
+    .settings-item {
+        padding: 1rem;
+    }
+    
+    .settings-icon {
+        margin-right: 1rem;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .profile-title {
+        font-size: 1.7rem;
+    }
+    
+    .section-header {
+        font-size: 1.3rem;
+    }
+    
+    .user-name {
+        font-size: 1.5rem;
+    }
+}
+
+
+.featured-card {
+    background-color: #f8f5ff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.table-dark {
+    background-color: #222;
+    color: #fff;
+    border-color: #444;
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.section-header {
+    margin-bottom: 1rem;
+    color: #FFB400;
+    font-weight: bold;
+}
+
+
+.recommendation-card {
+    transition: box-shadow 0.3s ease;
+}
+.recommendation-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}

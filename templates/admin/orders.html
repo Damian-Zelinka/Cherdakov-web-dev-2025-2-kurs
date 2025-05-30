@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex min-h-screen bg-gray-100">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-violet-50 p-6 flex flex-col justify-between">
+    <div>
+      <h2 class="text-xl font-semibold mb-6">Beepro</h2>
+      <nav class="flex flex-col gap-3">
+        <a href="{{ url_for('admin_dashboard') }}" class="text-gray-700 hover:text-violet-700 px-4 py-2">Dashboard</a>
+        <a href="{{ url_for('admin_products') }}" class="text-gray-700 hover:text-violet-700 px-4 py-2">Products</a>
+        <a href="{{ url_for('admin_users') }}" class="text-gray-700 hover:text-violet-700 px-4 py-2">Users</a>
+        <a href="{{ url_for('admin_orders') }}" class="bg-violet-100 text-violet-700 rounded px-4 py-2 font-medium">Orders</a>
+      </nav>
+    </div>
+    <div class="text-sm text-gray-500">
+      <div class="flex items-center gap-2">
+        <img src="{{ url_for('static', filename='avatar.png') }}" class="w-8 h-8 rounded-full" alt="Admin">
+        <div>
+          <p class="text-gray-700 font-medium">{{ current_user.login }}</p>
+            <p class="text-gray-500 text-xs">{{ current_user.email }}</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-1 p-6">
+    <div class="mb-4 text-sm text-gray-500">
+      <span>Dashboard</span> &gt; <span class="font-semibold text-gray-700">Orders</span>
+    </div>
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-semibold text-gray-800">Orders</h1>
+      <div class="space-x-2">
+        <a href="{{ url_for('export_orders_csv') }}" class="bg-purple-100 text-purple-800 px-4 py-2 rounded">Export CSV</a>
+      </div>
+    </div>    
+    <div class="overflow-x-auto bg-white rounded shadow">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">#</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Full Name</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Price</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Created at</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">OrderList</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-700">
+          {% for order in orders %}
+          <tr>
+            <td class="px-4 py-3">{{ order.id }}</td>
+            <td class="px-4 py-3">{{ order.user.full_name or order.user.login }}</td>
+            <td class="px-4 py-3">{{ order.total_amount }} ₽</td>
+            <td class="px-4 py-3">{{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td class="px-4 py-3">
+              <ul class="space-y-1">
+                {% for item in order.items %}
+                <li>{{ item.product.name }} × {{ item.quantity }} ({{ item.price }} ₽)</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td class="px-4 py-3 space-x-2">
+              <label for="modal-{{ order.id }}" class="">✏️</label>
+              <form action="{{ url_for('delete_order', order_id=order.id) }}" method="POST" class="inline">
+                <button type="submit" onclick="return confirm('Удалить заказ?');" class="">🗑️</button>
+              </form>
+            </td>
+          </tr>
+
+          <!-- Модалка редактирования -->
+          <input type="checkbox" id="modal-{{ order.id }}" class="modal-toggle hidden">
+          <div class="modal fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center" style="z-index: 1000;" id="modal-wrapper-{{ order.id }}">
+            <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 relative text-gray-900">
+              <label for="modal-{{ order.id }}" class="absolute top-4 right-4 text-gray-500 hover:text-red-500 cursor-pointer text-2xl">&times;</label>
+              <form method="POST" action="{{ url_for('edit_order', order_id=order.id) }}" class="space-y-4">
+                <h2 class="text-xl font-semibold mb-4">Edit order #{{ order.id }}</h2>
+                <div>
+                  <label class="block text-sm font-medium mb-1">Full Name</label>
+                  <select name="user_id" class="w-full border border-gray-300 rounded px-3 py-2">
+                    {% for user in users %}
+                    <option value="{{ user.id }}" {% if user.id == order.user_id %}selected{% endif %}>
+                      {{ user.full_name or user.login }}
+                    </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1">Products</label>
+                  <div class="space-y-2">
+                    {% for item in order.items %}
+                    <div>
+                      <label class="text-sm block mb-1">{{ item.product.name }}</label>
+                      <input type="number" name="quantity_{{ item.id }}" value="{{ item.quantity }}" min="1"
+                             class="w-full border border-gray-300 rounded px-3 py-1">
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-4">
+                  <label for="modal-{{ order.id }}" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded cursor-pointer">Exit</label>
+                  <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">💾 Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <script>
+            document.getElementById('modal-{{ order.id }}').addEventListener('change', function () {
+              const modal = document.getElementById('modal-wrapper-{{ order.id }}');
+              if (this.checked) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+              } else {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+              }
+            });
+          </script>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+{% endblock %}

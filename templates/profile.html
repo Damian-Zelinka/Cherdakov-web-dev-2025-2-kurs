@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container profile-container">
+    <!-- Хлебные крошки -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Profile</li>
+        </ol>   
+    </nav>
+
+    <div class="profile-card">
+        <h1 class="profile-title">Profile Overview</h1>
+        
+        <!-- Основная информация -->
+        <div class="profile-section">
+            <h2 class="section-header">Account</h2>
+            <div class="user-info">
+                <div class="user-avatar-container">
+                    <div class="user-avatar">
+                        {% if current_user.avatar %}
+                            <img src="{{ url_for('static', filename='avatars/' + current_user.avatar) }}" alt="Avatar">
+                        {% else %}
+                            <div class="avatar-placeholder">{{ current_user.full_name[0] }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Форма для загрузки аватара -->
+                    <form method="POST" action="{{ url_for('upload_avatar') }}" enctype="multipart/form-data" class="avatar-form">
+                        <div class="input-group">
+                            <input type="file" class="form-control-file" name="avatar" accept="image/*" required>
+                            <button class="btn btn-upload" type="submit">Upload</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div>
+                    <div class="user-name">{{ current_user.full_name }}</div>
+                    <div class="user-role">{{ current_user.role.name if current_user.role else 'User' }}</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Персональные данные -->
+        <div class="profile-section">
+            <h2 class="section-header">Personal Details</h2>
+            <div class="detail-item">
+                <div class="detail-label">Email</div>
+                <div class="detail-value">{{ current_user.email }}</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Phone</div>
+                <div class="detail-value">
+                    {% if current_user.phone %}
+                        {{ current_user.phone }}
+                    {% else %}
+                        <span class="text-muted">Not provided</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="profile-section">
+    <h2 class="section-header">Ваши заказы</h2>
+    {% if orders %}
+    <div class="table-responsive">
+        <table class="table table-dark table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Состав заказа</th>
+                    <th>Сумма ($)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>
+                        <ul class="list-unstyled mb-0">
+                            {% for item in order.items %}
+                            <li>{{ item.product.name }} × {{ item.quantity }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{{ order.total_amount }} $</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>У вас пока нет заказов.</p>
+    {% endif %}
+</div>
+
+        
+        <!-- Настройки аккаунта -->
+        <div class="profile-section">
+            <h2 class="section-header">Account Settings</h2>
+            <div class="settings-list">
+                <a href="{{ url_for('change_password') }}" class="settings-item">
+                    <div class="settings-icon">🔒</div>
+                    <div class="settings-info">
+                        <div class="settings-title">Change Password</div>
+                        <div class="settings-desc">Update your password</div>
+                    </div>
+                </a>
+                    <a href="{{ url_for('edit_profile') }}" class="settings-item">
+                    <div class="settings-icon">✏️</div>
+                    <div class="settings-info">
+                        <div class="settings-title">Edit Profile</div>
+                        <div class="settings-desc">Update your personal details</div>
+                    </div>
+                </a>
+
+                <a href="#" class="settings-item">
+                    <div class="settings-icon">🔔</div>
+                    <div class="settings-info">
+                        <div class="settings-title">Notifications</div>
+                        <div class="settings-desc">Email and push alerts</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="settings-item">
+                    <div class="settings-icon">🏠</div>
+                    <div class="settings-info">
+                        <div class="settings-title">Shipping Address</div>
+                        <div class="settings-desc">
+                            {% if current_user.address %}
+                                {{ current_user.address }}
+                            {% else %}
+                                Not provided
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

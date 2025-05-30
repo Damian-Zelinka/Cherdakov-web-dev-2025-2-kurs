@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container auth-container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="auth-card shadow-lg">
+                <div class="auth-header mb-4">
+                    <h1 class="auth-title">Create Account</h1>
+                    <p class="auth-subtitle">Sign up to start shopping for beekeeping supplies.</p>
+                </div>
+
+                <form method="POST" action="{{ url_for('register') }}">
+                    <!-- Логин (оставлен из вашего кода) -->
+                    <div class="mb-4">
+                        <label for="login" class="form-label">Login</label>
+                        <input 
+                            type="text" 
+                            class="form-control auth-input {% if 'login' in errors %}is-invalid{% endif %}" 
+                            id="login" 
+                            name="login" 
+                            placeholder="Enter your login"
+                            value="{{ form_data.login if form_data }}"
+                            required
+                        >
+                        {% if 'login' in errors %}
+                            <div class="invalid-feedback">{{ errors.login }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Полное имя (адаптировано под wireframe) -->
+                    <div class="mb-4">
+                        <label for="full_name" class="form-label">Full Name</label>
+                        <input 
+                            type="text" 
+                            class="form-control auth-input {% if 'full_name' in errors %}is-invalid{% endif %}" 
+                            id="full_name" 
+                            name="full_name" 
+                            placeholder="Enter your full name"
+                            value="{{ form_data.full_name if form_data }}"
+                        >
+                        {% if 'full_name' in errors %}
+                            <div class="invalid-feedback">{{ errors.full_name }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Email (из wireframe) -->
+                    <div class="mb-4">
+                        <label for="email" class="form-label">Email</label>
+                        <input 
+                            type="email" 
+                            class="form-control auth-input {% if 'email' in errors %}is-invalid{% endif %}" 
+                            id="email" 
+                            name="email" 
+                            placeholder="Enter your email"
+                            value="{{ form_data.email if form_data }}"
+                                                    >
+                        {% if 'email' in errors %}
+                            <div class="invalid-feedback">{{ errors.email }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Пароль и подтверждение (ваш код + wireframe) -->
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <input 
+                            type="password" 
+                            class="form-control auth-input {% if 'password' in errors %}is-invalid{% endif %}" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Create a password"
+                            required
+                        >
+                        {% if 'password' in errors %}
+                            <div class="invalid-feedback">{{ errors.password }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="confirm_password" class="form-label">Confirm Password</label>
+                        <input 
+                            type="password" 
+                            class="form-control auth-input {% if 'confirm_password' in errors %}is-invalid{% endif %}" 
+                            id="confirm_password" 
+                            name="confirm_password" 
+                            placeholder="Repeat your password"
+                            required
+                        >
+                        {% if 'confirm_password' in errors %}
+                            <div class="invalid-feedback">{{ errors.confirm_password }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-auth w-100 mb-4">Register</button>
+                    
+                    <div class="auth-links text-center">
+                        <span class="text-muted">Already have an account?</span>
+                        <a href="{{ url_for('login') }}" class="text-link ms-2">Log in</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

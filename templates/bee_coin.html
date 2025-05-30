@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container bee-container">
+    <!-- Заголовок -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h1 class="bee-main-title">BeeCoin Dashboard</h1>
+        </div>
+    </div>
+
+    <!-- Баланс -->
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="balance-card">
+                <h3 class="balance-label">Current Balance</h3>
+                <div class="balance-amount">{{ current_user.bee_coins or "0" }} BeeCoin</div>
+                <p class="balance-description">Your loyalty rewards balance.</p>
+                <div class="balance-actions">
+                    <a href="{{ url_for('catalog') }}" class="btn btn-redeem">Redeem</a>
+                    <button class="btn btn-earn">Earn More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Способы заработка -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="section-title">Earning BeeCoin</h2>
+            <div class="earning-cards">
+                <div class="earning-item">
+                    <div class="earning-icon">🛒</div>
+                    <h3 class="earning-title">Shop & Earn</h3>
+                    <p class="earning-text">Get BeeCoin for every purchase.</p>
+                </div>
+                
+                <div class="earning-item">
+                    <div class="earning-icon">🎓</div>
+                    <h3 class="earning-title">Learn & Earn</h3>
+                    <p class="earning-text">Complete tutorials for rewards.</p>
+                </div>
+                
+                <div class="earning-item">
+                    <div class="earning-icon">👥</div>
+                    <h3 class="earning-title">Refer Friends</h3>
+                    <p class="earning-text">Invite others and earn together.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ <!-- История транзакций -->
+<div class="row">
+    <div class="col-12">
+        <h2 class="section-title">Transaction History</h2>
+        <div class="transaction-list">
+            {% if transactions %}
+                {% for tx in transactions %}
+                <div class="transaction-item">
+                    <div class="transaction-amount {{ 'positive' if tx.amount > 0 else 'negative' }}">
+                        {{ '+' if tx.amount > 0 else '' }}{{ tx.amount | round(2) }} BC
+                    </div>
+                    <div class="transaction-info">
+                        <div class="transaction-description">
+                            {{ tx.description or tx.transaction_type.capitalize() }}
+                        </div>
+                        <div class="transaction-date">
+                            {{ tx.created_at.strftime('%b %d, %Y') }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted">Нет транзакций BeeCoin.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% macro render_field(field, label=None, type='text', required=False) %}
+<div class="mb-3">
+    {% if label %}
+    <label for="{{ field.id }}" class="form-label">
+        {{ label }}
+        {% if required %}<span class="text-danger">*</span>{% endif %}
+    </label>
+    {% endif %}
+    
+    {% if type == 'select' %}
+    <select class="form-select {% if field.errors %}is-invalid{% endif %}" 
+            id="{{ field.id }}" 
+            name="{{ field.name }}">
+        {{ caller() }}
+    </select>
+    {% else %}
+    <input type="{{ type }}" 
+           class="form-control {% if field.errors %}is-invalid{% endif %}" 
+           id="{{ field.id }}" 
+           name="{{ field.name }}" 
+           value="{{ field.data | default('', true) }}"
+           {% if required %}required{% endif %}>
+    {% endif %}
+
+    {% if field.errors %}
+    <div class="invalid-feedback">
+        {% for error in field.errors %}
+        <div>{{ error }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endmacro %}

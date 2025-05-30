@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4>{{ 'Редактирование' if user else 'Создание' }} пользователя</h4>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            {% if not user %}
+            <div class="mb-3">
+                <label class="form-label">Логин *</label>
+                <input type="text" 
+                       class="form-control {% if 'login' in errors %}is-invalid{% endif %}" 
+                       name="login" 
+                       value="{{ form_data.login if form_data else '' }}"
+                       required>
+                {% if 'login' in errors %}
+                <div class="invalid-feedback">{{ errors.login }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Пароль *</label>
+                <input type="password" 
+                       class="form-control {% if 'password' in errors %}is-invalid{% endif %}" 
+                       name="password" 
+                       required>
+                {% if 'password' in errors %}
+                <div class="invalid-feedback">{{ errors.password }}</div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label class="form-label">Фамилия</label>
+                <input type="text" 
+                       class="form-control" 
+                       name="last_name" 
+                       value="{{ form_data.last_name if form_data else (user.last_name if user else '') }}">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Имя *</label>
+                <input type="text" 
+                       class="form-control {% if 'first_name' in errors %}is-invalid{% endif %}" 
+                       name="first_name" 
+                       value="{{ form_data.first_name if form_data else (user.first_name if user else '') }}"
+                       required>
+                {% if 'first_name' in errors %}
+                <div class="invalid-feedback">{{ errors.first_name }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Отчество</label>
+                <input type="text" 
+                       class="form-control" 
+                       name="middle_name" 
+                       value="{{ form_data.middle_name if form_data else (user.middle_name if user else '') }}">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Роль</label>
+                <select class="form-select" name="role_id">
+                    <option value="">Без роли</option>
+                    {% for role in roles %}
+                    <option value="{{ role.id }}" 
+                        {% if (form_data.role_id | string if form_data else (user.role_id | string if user else '')) == role.id | string %}selected{% endif %}>
+                        {{ role.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

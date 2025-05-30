@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex min-h-screen bg-gray-50">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-violet-50 p-6 flex flex-col justify-between">
+        <div>
+            <h2 class="text-xl font-semibold mb-6">Beepro</h2>
+            <nav class="flex flex-col gap-3">
+                <a href="{{ url_for('admin_dashboard') }}" class="bg-violet-100 text-violet-700 rounded px-4 py-2 font-medium">Dashboard</a>
+                <a href="{{ url_for('admin_products') }}" class="text-gray-700 hover:text-violet-700 px-4 py-2">Products</a>
+                <a href="{{ url_for('admin_users') }}" class="text-gray-700 hover:text-violet-700 px-4 py-2">Users</a>
+                <a href="{{ url_for('admin_orders') }}" class="text-gray-700 hover:text-violet-700 px-4 py-2">Orders</a>
+            </nav>
+        </div>
+        <div class="text-sm text-gray-500">
+            <div class="flex items-center gap-2">
+                <img src="{{ url_for('static', filename='avatar.png') }}" class="w-8 h-8 rounded-full" alt="Admin">
+                <div>
+                    <p class="text-gray-700 font-medium">{{ current_user.login }}</p>
+                    <p class="text-gray-500 text-xs">{{ current_user.email }}</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-10">
+        <h1 class="text-xl font-semibold text-gray-800 mb-6">Dashboard Overview</h1>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Card 1 -->
+            <div class="bg-violet-50 rounded-xl p-6 shadow-sm">
+                <div class="mb-4">
+                    <p class="text-gray-500">Total Products</p>
+                    <h2 class="text-2xl font-bold text-gray-800">{{ product_count }}</h2>
+                </div>
+                <button class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700 text-sm">
+                    Add New
+                </button>
+            </div>
+            <!-- Card 2 -->
+            <div class="bg-violet-50 rounded-xl p-6 shadow-sm">
+                <div class="mb-4">
+                    <p class="text-gray-500">Active Users</p>
+                    <h2 class="text-2xl font-bold text-gray-800">{{ user_count }}</h2>
+                </div>
+                <button class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700 text-sm">
+                    Invite User
+                </button>
+            </div>
+            <!-- Card 3 -->
+            <div class="bg-violet-50 rounded-xl p-6 shadow-sm">
+                <div class="row">
+                    <div class="md-4">
+                            <h5 class="text-gray-500">Active Admins</h5>
+                            <h2 class="text-2xl font-bold text-gray-800">{{ admin_count }}</h2>
+                    </div>
+                </div>
+                <button class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700 text-sm">
+                    Review
+                </button>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
