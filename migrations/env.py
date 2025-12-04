@@ -1,8 +1,9 @@
 import os
 import logging
 from logging.config import fileConfig
-
+import sys
 from alembic import context
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from models import db  # Now this works because env.py is in root
 
 # Alembic Config object
