@@ -1,30 +1,30 @@
 import os
-import logging
 from logging.config import fileConfig
 
+from sqlalchemy import engine_from_config
+from sqlalchemy import pool
+
 from alembic import context
-from sqlalchemy import engine_from_config, pool
-from yourapp.models import Base  # replace with your SQLAlchemy Base
+
+# Import your SQLAlchemy Base
+from models import db  # This is your SQLAlchemy() instance
 
 # Alembic Config object
 config = context.config
 
-# Logging setup
+# Interpret the config file for Python logging
 fileConfig(config.config_file_name)
+import logging
 logger = logging.getLogger('alembic.env')
 
-# ---------------------------
-# Hardcoded DB URL
-# ---------------------------
-DB_URL = "postgresql://damko:damko@bee_db:5432/lab2"
-config.set_main_option("sqlalchemy.url", DB_URL)
+# Hardcoded database URL
+DATABASE_URL = "postgresql://damko:damko@bee_db:5432/lab2"
+config.set_main_option("sqlalchemy.url", DATABASE_URL)
 
-# Set target metadata for autogenerate
-target_metadata = Base.metadata  # replace Base with your declarative_base
+# For autogenerate support
+target_metadata = db.metadata
 
-# ---------------------------
-# Offline migrations
-# ---------------------------
+
 def run_migrations_offline():
     """Run migrations in 'offline' mode."""
     url = config.get_main_option("sqlalchemy.url")
@@ -38,9 +38,7 @@ def run_migrations_offline():
     with context.begin_transaction():
         context.run_migrations()
 
-# ---------------------------
-# Online migrations
-# ---------------------------
+
 def run_migrations_online():
     """Run migrations in 'online' mode."""
     connectable = engine_from_config(
@@ -50,17 +48,12 @@ def run_migrations_online():
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection,
-            target_metadata=target_metadata,
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()
 
-# ---------------------------
-# Run migrations
-# ---------------------------
+
 if context.is_offline_mode():
     run_migrations_offline()
 else:
