@@ -80,7 +80,7 @@ def login():
 
 @app.route('/demo')
 @login_required
-def pr_demo():
+def demo():
     return render_template('demo.html')
 
 @app.route('/logout')
