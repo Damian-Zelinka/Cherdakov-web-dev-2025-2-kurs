@@ -4,7 +4,7 @@ from flask import Flask, abort, make_response, render_template, request, redirec
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_bcrypt import Bcrypt
 from models import *
-from flask_migrate import Migrate
+# from flask_migrate import Migrate
 import os
 from werkzeug.utils import secure_filename
 import time
@@ -16,11 +16,15 @@ from functools import wraps
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@bee_db:5432/lab2"
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db.init_app(app)
 
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
-migrate = Migrate(app, db)
+# migrate = Migrate(app, db)
 
 
 
