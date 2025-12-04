@@ -78,6 +78,11 @@ def login():
         flash('Неверный логин или пароль')
     return render_template('login.html')
 
+@app.route('/demo')
+@login_required
+def pr_demo():
+    return render_template('demo.html')
+
 @app.route('/logout')
 @login_required
 def logout():
