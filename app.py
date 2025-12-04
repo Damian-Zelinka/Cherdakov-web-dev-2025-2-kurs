@@ -16,7 +16,10 @@ from functools import wraps
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://damko:damko@bee_db:5432/lab2"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
+    "DATABASE_URL",
+    "postgresql://postgres:postgres@bee_db:5432/lab2"  # fallback for local Docker
+)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
