@@ -111,7 +111,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DB_URL }}
         run: |
           echo "Running alembic upgrade head..."
-          alembic upgrade head || {
+          alembic -c migrations/alembic.ini upgrade head || {
             echo "Migration failed.";
             exit 1;
           }
