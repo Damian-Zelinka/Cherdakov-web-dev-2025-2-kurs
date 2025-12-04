@@ -1,7 +1,7 @@
 # test_app.py
 import pytest
-from app import app as flask_app, db, bcrypt
-from models import User, Role, Product, BeeCoinTransaction, Order, OrderItem
+from app import app as flask_app, db
+from models import User, Role, Product
 from flask import session
 
 @pytest.fixture
@@ -31,10 +31,20 @@ def client(app):
 def init_users(app):
     with app.app_context():
         # Create admin user
-        admin = User(login="admin", full_name="Admin User", email="admin@test.com", role_id=1)
+        admin = User(
+            login="admin",
+            full_name="Admin User",
+            email="admin@test.com",
+            role_id=1
+        )
         admin.set_password("Admin123!")
         # Create regular user
-        user = User(login="user", full_name="Normal User", email="user@test.com", role_id=2)
+        user = User(
+            login="user",
+            full_name="Normal User",
+            email="user@test.com",
+            role_id=2
+        )
         user.set_password("User123!")
         db.session.add_all([admin, user])
         db.session.commit()
@@ -52,102 +62,137 @@ def init_products(app):
         return products
 
 def login(client, login, password):
-    return client.post("/login", data={"login": login, "password": password}, follow_redirects=True)
+    return client.post(
+        "/login",
+        data={"login": login, "password": password},
+        follow_redirects=True
+    )
 
 def logout(client):
     return client.get("/logout", follow_redirects=True)
 
 def register(client, login, password, confirm_password, full_name, email):
-    return client.post("/register", data={
-        "login": login,
-        "password": password,
-        "confirm_password": confirm_password,
-        "full_name": full_name,
-        "email": email
-    }, follow_redirects=True)
+    return client.post(
+        "/register",
+        data={
+            "login": login,
+            "password": password,
+            "confirm_password": confirm_password,
+            "full_name": full_name,
+            "email": email,
+        },
+        follow_redirects=True
+    )
 
 # ---------------- TESTS ---------------- #
 
 def test_registration(client):
     # Successful registration
-    response = register(client, "newuser", "Password1!", "Password1!", "New User", "newuser@test.com")
-    assert b"Регистрация прошла успешно" in response.data
+    response = register(
+        client, "newuser", "Password1!", "Password1!", "New User", "newuser@test.com"
+    )
+    assert "Регистрация прошла успешно" in response.data.decode("utf-8")
 
     # Duplicate login
-    response = register(client, "newuser", "Password1!", "Password1!", "New User", "newuser2@test.com")
-    assert b"Логин уже занят" in response.data
+    response = register(
+        client, "newuser", "Password1!", "Password1!", "New User", "newuser2@test.com"
+    )
+    assert "Логин уже занят" in response.data.decode("utf-8")
 
     # Duplicate email
-    response = register(client, "anotheruser", "Password1!", "Password1!", "New User", "newuser@test.com")
-    assert b"Email уже используется" in response.data
+    response = register(
+        client, "anotheruser", "Password1!", "Password1!", "New User", "newuser@test.com"
+    )
+    assert "Email уже используется" in response.data.decode("utf-8")
 
     # Invalid password
-    response = register(client, "badpass", "short", "short", "Bad Pass", "bad@test.com")
-    assert b"Минимум 8 символов" in response.data
+    response = register(
+        client, "badpass", "short", "short", "Bad Pass", "bad@test.com"
+    )
+    assert "Минимум 8 символов" in response.data.decode("utf-8")
+
 
 def test_login_logout(client, init_users):
     # Successful login
     response = login(client, "user", "User123!")
-    assert b"user" in response.data or response.status_code == 200
+    assert "user" in response.data.decode("utf-8")
 
     # Logout
     response = logout(client)
-    assert b"Login" in response.data or response.status_code == 200
+    assert "Login" in response.data.decode("utf-8")
 
     # Wrong credentials
     response = login(client, "user", "WrongPass")
-    assert b"Неверный логин или пароль" in response.data
+    assert "Неверный логин или пароль" in response.data.decode("utf-8")
+
 
 def test_change_password(client, init_users):
     login(client, "user", "User123!")
     # Successful password change
-    response = client.post("/change_password", data={
-        "old_password": "User123!",
-        "new_password": "NewPass123!",
-        "confirm_password": "NewPass123!"
-    }, follow_redirects=True)
-    assert b"Пароль успешно изменен" in response.data
+    response = client.post(
+        "/change_password",
+        data={
+            "old_password": "User123!",
+            "new_password": "NewPass123!",
+            "confirm_password": "NewPass123!",
+        },
+        follow_redirects=True,
+    )
+    assert "Пароль успешно изменен" in response.data.decode("utf-8")
 
     # Wrong current password
-    response = client.post("/change_password", data={
-        "old_password": "WrongOld",
-        "new_password": "NewPass123!",
-        "confirm_password": "NewPass123!"
-    }, follow_redirects=True)
-    assert b"Неверный текущий пароль" in response.data
+    response = client.post(
+        "/change_password",
+        data={
+            "old_password": "WrongOld",
+            "new_password": "NewPass123!",
+            "confirm_password": "NewPass123!",
+        },
+        follow_redirects=True,
+    )
+    assert "Неверный текущий пароль" in response.data.decode("utf-8")
 
     # Password mismatch
-    response = client.post("/change_password", data={
-        "old_password": "NewPass123!",
-        "new_password": "AnotherPass123!",
-        "confirm_password": "Mismatch123!"
-    }, follow_redirects=True)
-    assert b"Пароли не совпадают" in response.data
+    response = client.post(
+        "/change_password",
+        data={
+            "old_password": "NewPass123!",
+            "new_password": "AnotherPass123!",
+            "confirm_password": "Mismatch123!",
+        },
+        follow_redirects=True,
+    )
+    assert "Пароли не совпадают" in response.data.decode("utf-8")
+
 
 def test_add_to_cart_and_checkout(client, init_users, init_products):
     login(client, "user", "User123!")
     # Add first product to cart
     response = client.get(f"/add_to_cart/{init_products[0].id}", follow_redirects=True)
-    assert b"added to your cart" in response.data
+    assert "added to your cart" in response.data.decode("utf-8")
 
     # Checkout
-    response = client.post("/checkout", data={"beecoin_to_use": "0"}, follow_redirects=True)
-    assert b"Order placed successfully" in response.data
+    response = client.post(
+        "/checkout", data={"beecoin_to_use": "0"}, follow_redirects=True
+    )
+    assert "Order placed successfully" in response.data.decode("utf-8")
 
     # Check BeeCoins updated
     with flask_app.app_context():
         user = User.query.filter_by(login="user").first()
         assert user.bee_coins > 0
 
+
 def test_admin_access(client, init_users):
     # Regular user cannot access admin
     login(client, "user", "User123!")
     response = client.get("/admin/dashboard", follow_redirects=True)
-    assert b"Доступ запрещён" in response.data
+    assert "Доступ запрещён" in response.data.decode("utf-8")
     logout(client)
 
     # Admin can access
     login(client, "admin", "Admin123!")
     response = client.get("/admin/dashboard")
     assert response.status_code == 200
-    assert b"dashboard" in response.data or b"Admin" in response.data
+    html = response.data.decode("utf-8")
+    assert "dashboard" in html or "Admin" in html
