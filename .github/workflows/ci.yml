@@ -71,16 +71,23 @@ jobs:
           mypy . --ignore-missing-imports || true
 
       # -------------------- TESTS -------------------------
-
-      - name: Run Pytest
-        env:
-          DATABASE_URL: ${{ secrets.DB_URL }}
+      
+      - name: Set up Python for tests
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      
+      - name: Install test dependencies
         run: |
-          pytest tests/ -v --tb=short || true
-
-      - name: Pytest Coverage
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-flask
+      
+      - name: Run tests with pytest
         run: |
-          pytest tests/ --cov=. --cov-report=term --cov-fail-under=40 -v || true
+          export FLASK_ENV=testing
+          pytest test_app.py -v --maxfail=1 --disable-warnings
 
       # -------------------- DOCKER BUILD ----------------------
 
