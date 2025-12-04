@@ -94,7 +94,7 @@ jobs:
         run: |
           echo "Waiting for Flask app..."
           for i in {1..30}; do
-            if curl -f http://localhost:7009/ >/dev/null 2>&1; then
+            if curl -f http://localhost:5000/ >/dev/null 2>&1; then
               echo "App is responding!"
               exit 0
             fi
