@@ -112,7 +112,7 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: |
           echo "Running alembic upgrade head..."
-          alembic -c migrations/alembic.ini upgrade head || {
+          alembic -c alembic.ini upgrade head || {
             echo "Migration failed.";
             exit 1;
           }
