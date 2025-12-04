@@ -1,4 +1,5 @@
 #!/bin/sh
+echo "ARGS: $@"
 
 host="$1"
 port="$2"
