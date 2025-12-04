@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>URL параметры</h1>
+    {% if not params %}
+    <p>No parameters provided</p>
+{% else %}
+    <ul>
+    {% for key, values in params.items() %}
+        <li>{{ key }}: {{ values }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,12 @@
+[MASTER]
+ignore=migrations,static,templates
+jobs=1
+
+[MESSAGES CONTROL]
+disable=C0114,C0115,C0116  # missing docstring warnings
+
+[FORMAT]
+max-line-length=88
+
+[TYPECHECK]
+ignore-missing-imports=yes
