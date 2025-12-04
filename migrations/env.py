@@ -1,8 +1,9 @@
 import os
 from logging.config import fileConfig
-
+import sys
 from sqlalchemy import create_engine
 from alembic import context
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from models import db  # Your SQLAlchemy instance with metadata
 
 # Alembic Config object
