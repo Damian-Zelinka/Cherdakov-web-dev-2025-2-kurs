@@ -104,18 +104,16 @@ jobs:
           docker compose logs
           exit 1
 
-      # -------------------- ALEMBIC MIGRATIONS --------------------
+      # -------------------- MIGRATIONS --------------------
 
-      - name: Apply Alembic migrations
+      - name: Initialize database
         env:
-          DATABASE_URL: postgresql://postgres:postgres@postgres:5432/app_db
+          DATABASE_URL: postgresql://postgres:postgres@bee_db:5432/lab2
         working-directory: ${{ github.workspace }}
         run: |
-          echo "Running alembic upgrade head..."
-          alembic -c alembic.ini upgrade head || {
-            echo "Migration failed.";
-            exit 1;
-          }
+          echo "Creating tables..."
+          python -c "from app import app, db; \
+                     with app.app_context(): db.create_all()"
 
       # -------------------- ARTIFACTS -------------------------
 
