@@ -1,37 +1,40 @@
 import os
+import logging
 from logging.config import fileConfig
-from sqlalchemy import engine_from_config, pool
+
 from alembic import context
+from models import db  # Now this works because env.py is in root
 
-from models import db  # Your SQLAlchemy instance
-
-# Alembic config
+# Alembic Config object
 config = context.config
+
+# Logging setup
 fileConfig(config.config_file_name)
+logger = logging.getLogger('alembic.env')
 
-# Hardcoded database URL (replace with your CI one if needed)
-DATABASE_URL = os.getenv("DATABASE_URL") or "postgresql://damko:damko@bee_db:5432/lab2"
-config.set_main_option("sqlalchemy.url", DATABASE_URL)
+# Hardcoded database URL (replace with your desired URL)
+DATABASE_URL = 'postgresql://postgres:postgres@postgres:5432/app_db'
+config.set_main_option('sqlalchemy.url', DATABASE_URL)
 
+# Metadata from models
 target_metadata = db.metadata
 
 def run_migrations_offline():
+    """Run migrations in 'offline' mode."""
     url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
         target_metadata=target_metadata,
-        literal_binds=True
+        literal_binds=True,
+        dialect_opts={"paramstyle": "named"}
     )
 
     with context.begin_transaction():
         context.run_migrations()
 
 def run_migrations_online():
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
-        prefix='sqlalchemy.',
-        poolclass=pool.NullPool
-    )
+    """Run migrations in 'online' mode."""
+    connectable = db.engine
 
     with connectable.connect() as connection:
         context.configure(
