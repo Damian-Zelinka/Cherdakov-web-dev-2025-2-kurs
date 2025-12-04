@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}PR Demo{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-3xl font-bold mb-4">Pull Request Demo Page</h1>
+    <p class="mb-4">This page demonstrates a new PR feature or workflow.</p>
+
+    <div class="bg-yellow-100 p-4 rounded-lg border-l-4 border-yellow-500">
+        <strong>Note:</strong> This is a demonstration page for CI/CD PR testing.
+    </div>
+
+    <a href="{{ url_for('index') }}" class="btn btn-primary mt-4">Back to Home</a>
+</div>
+{% endblock %}
