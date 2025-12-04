@@ -1,4 +1,5 @@
 import os
+import sys
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -8,6 +9,8 @@ from alembic import context
 
 # Import your SQLAlchemy Base
 from models import db  # This is your SQLAlchemy() instance
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 # Alembic Config object
 config = context.config
