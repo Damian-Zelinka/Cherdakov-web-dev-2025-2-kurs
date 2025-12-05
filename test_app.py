@@ -15,10 +15,12 @@ def app():
     with flask_app.app_context():
         db.create_all()
         # Create roles
-        admin_role = Role(name="Администратор")
-        user_role = Role(name="Пользователь")
-        db.session.add_all([admin_role, user_role])
-        db.session.commit()
+        if Role.query.count() == 0:
+            db.session.add_all([
+                Role(name="Администратор"),
+                Role(name="Пользователь")
+            ])
+            db.session.commit()
         yield flask_app
         db.session.remove()
         db.drop_all()
