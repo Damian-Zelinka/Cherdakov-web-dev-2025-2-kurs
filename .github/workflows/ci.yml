@@ -85,6 +85,8 @@ jobs:
           pip install pytest pytest-flask
       
       - name: Run tests with pytest
+        env:
+          DATABASE_URL: "sqlite:///ci_test.db"
         run: |
           export FLASK_ENV=testing
           pytest test_app.py -v --maxfail=1 --disable-warnings
