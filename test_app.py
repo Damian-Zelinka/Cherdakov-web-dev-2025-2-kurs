@@ -170,7 +170,8 @@ def test_change_password(client, init_users):
 def test_add_to_cart_and_checkout(client, init_users, init_products):
     login(client, "user", "User123!")
     # Add first product to cart
-    response = client.get(f"/add_to_cart/{init_products[0].id}", follow_redirects=True)
+    product_id = init_products[0]
+    response = client.get(f"/add_to_cart/{product_id}", follow_redirects=True)
     assert "added to your cart" in response.data.decode("utf-8")
 
     # Checkout
