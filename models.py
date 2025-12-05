@@ -91,7 +91,7 @@ class BeeCoinTransaction(db.Model):
 
 
 
-class NewTestTable(db.model):
+class NewTestTable(db.Model):
     __tablename__ = 'new_test_table'
 
     id = db.Column(db.Integer, primary_key=True)
