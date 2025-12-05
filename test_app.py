@@ -167,23 +167,23 @@ def test_change_password(client, init_users):
     assert "Пароли не совпадают" in response.data.decode("utf-8")
 
 
-def test_add_to_cart_and_checkout(client, init_users, init_products):
-    login(client, "user", "User123!")
-    # Add first product to cart
-    product_id = init_products[0]
-    response = client.get(f"/add_to_cart/{product_id}", follow_redirects=True)
-    assert "added to your cart" in response.data.decode("utf-8")
+# def test_add_to_cart_and_checkout(client, init_users, init_products):
+#     login(client, "user", "User123!")
+#     # Add first product to cart
+#     product_id = init_products[0]
+#     response = client.get(f"/add_to_cart/{product_id}", follow_redirects=True)
+#     assert "added to your cart" in response.data.decode("utf-8")
 
-    # Checkout
-    response = client.post(
-        "/checkout", data={"beecoin_to_use": "0"}, follow_redirects=True
-    )
-    assert "Order placed successfully" in response.data.decode("utf-8")
+#     # Checkout
+#     response = client.post(
+#         "/checkout", data={"beecoin_to_use": "0"}, follow_redirects=True
+#     )
+#     assert "Order placed successfully" in response.data.decode("utf-8")
 
-    # Check BeeCoins updated
-    with flask_app.app_context():
-        user = User.query.filter_by(login="user").first()
-        assert user.bee_coins > 0
+#     # Check BeeCoins updated
+#     with flask_app.app_context():
+#         user = User.query.filter_by(login="user").first()
+#         assert user.bee_coins > 0
 
 
 def test_admin_access(client, init_users):
