@@ -117,7 +117,7 @@ def test_registration(client):
 def test_login_logout(client, init_users):
     # Successful login
     response = login(client, "user", "User123!")
-    assert "user" in response.data.decode("utf-8")
+    assert "Logout" in response.data.decode("utf-8")
 
     # Logout
     response = logout(client)
